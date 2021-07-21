@@ -1,24 +1,32 @@
 from flask import Flask, render_template, request
 from chatterbot import ChatBot
+from chatterbot.trainers import ListTrainer
 
-app = Flask(__name__)
+import os
 
+# Creating a chatbot Instance
 bot = ChatBot('Buddy',
-            storage_adapter='chatterbot.storage.SQLStorageAdapter',
-            database_uri='sqlite:///database.sqlite3_eng',
-            logic_adapters=[
-        'chatterbot.logic.MathematicalEvaluation',
-        'chatterbot.logic.BestMatch',
-        {
-            'import_path': 'chatterbot.logic.BestMatch',
-            'default_response': 'I am sorry, but I do not understand.',
-            'maximum_similarity_threshold': 0.90
-        }],
+            logic_adapters=[{ 'import_path': 'chatterbot.logic.BestMatch',
+            'default_response': 'Perdon, no entiendo',
+            'maximum_similarity_threshold': 0.90}],
             read_only = True,
             preprocessors=['chatterbot.preprocessors.clean_whitespace',
                         'chatterbot.preprocessors.unescape_html',
-                        'chatterbot.preprocessors.convert_to_ascii']
-                        )
+                        'chatterbot.preprocessors.convert_to_ascii'])
+
+# locate training folder
+directory = 'training_data'
+
+for filename in os.listdir(directory):
+    if filename.endswith(".txt"): # only pick txt file for training
+        print('\n Chatbot training with '+os.path.join(directory, filename)+' file')
+        training_data = open(os.path.join(directory, filename)).read().splitlines()
+        trainer = ListTrainer(bot) # bot training
+        trainer.train(training_data)
+    else:
+        continue
+
+app = Flask(__name__)
 
 @app.route("/")
 def home():

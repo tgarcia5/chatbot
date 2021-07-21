@@ -1,0 +1,12 @@
+Necesito ayuda
+Ok, dame tus datos
+
+Ayuda
+Ok, dame tus datos
+
+Quiero hablar con tu jefe
+Ok, dame tus datos
+
+Quiero hablar con alguien
+Ok, dame tus datos
+
