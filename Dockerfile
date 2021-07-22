@@ -4,10 +4,15 @@ FROM python:3.7-slim
 
 WORKDIR /app
 
+RUN apt-get update
+RUN apt-get install -y git
+RUN git clone https://github.com/gunthercox/ChatterBot.git
+RUN pip install ./ChatterBot
+
 COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
+RUN pip install -r requirements.txt
 RUN python -m spacy download en
-#RUN apt-get install -y sqlite3 libsqlite3-dev
+
 
 COPY . .
 

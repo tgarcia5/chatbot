@@ -15,7 +15,7 @@ bot = ChatBot('Buddy',
                         'chatterbot.preprocessors.convert_to_ascii'])
 
 # locate training folder
-directory = 'training_data'
+directory = 'training_data/test'
 
 for filename in os.listdir(directory):
     if filename.endswith(".txt"): # only pick txt file for training
